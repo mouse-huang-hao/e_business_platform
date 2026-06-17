@@ -1,3 +1,4 @@
+import 'package:e_business_platform/api/homeapi.dart';
 import 'package:e_business_platform/components/home/HomeCategory.dart';
 import 'package:e_business_platform/components/home/HomeGoodsList.dart';
 import 'package:e_business_platform/components/home/HomeHot.dart';
@@ -8,17 +9,13 @@ import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
-
+  
   @override
   _HomeViewState createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  final List<BannerItem> _bannerList = [
-    BannerItem(id: "1",imgUrl:"https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg" ),
-    BannerItem(id: "2",imgUrl:"https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png"),
-    BannerItem(id: "3",imgUrl:"https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg")
-  ];
+  List<BannerItem>_bannerList=[];
   List<Widget> _getslivers(){
     return [
       SliverToBoxAdapter(child: HomeSlider(bannerList: _bannerList)),
@@ -42,6 +39,21 @@ class _HomeViewState extends State<HomeView> {
       HomeGoodsList()
     ];
   }
+  @override
+  void initState() { 
+    super.initState();
+    _getBannerList();
+
+  }
+
+
+  void _getBannerList()async{
+    _bannerList=  await getBannerListAPI();
+    setState(() {
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
