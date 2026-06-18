@@ -8,4 +8,6 @@ class GlobalConstants{
 
 class RequestInterface{
   static const String BANNER = "/home/banner";
+  static const String CATEGORY = "/home/category/head";
+  static const String RECOMMENDATION = "/hot/preference";
 }

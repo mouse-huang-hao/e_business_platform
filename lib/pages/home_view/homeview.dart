@@ -16,13 +16,19 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<BannerItem>_bannerList=[];
+  List<CategoryItem>_categoryList=[];
+  RecommendationResult _recommendationResult=RecommendationResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
   List<Widget> _getslivers(){
     return [
       SliverToBoxAdapter(child: HomeSlider(bannerList: _bannerList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: HomeCategory()),
+      SliverToBoxAdapter(child: HomeCategory(categoryList: _categoryList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: HomeRecommendation()),
+      SliverToBoxAdapter(child: HomeRecommendation(recommendationResult: _recommendationResult)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Padding(
@@ -43,12 +49,26 @@ class _HomeViewState extends State<HomeView> {
   void initState() { 
     super.initState();
     _getBannerList();
+    _getCategoryList();
+    _getRecommendationList();
 
   }
 
 
   void _getBannerList()async{
     _bannerList=  await getBannerListAPI();
+    setState(() {
+      
+    });
+  }
+  void _getCategoryList()async{
+    _categoryList=  await getCategoryListAPI();
+    setState(() {
+      
+    });
+  }
+  void _getRecommendationList()async{
+    _recommendationResult= await getRecommendationListAPI();
     setState(() {
       
     });

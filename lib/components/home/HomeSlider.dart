@@ -22,6 +22,7 @@ class _HomeSliderState extends State<HomeSlider> {
         width: MediaQuery.of(context).size.width,)
       ),
       options: CarouselOptions(
+        viewportFraction: 1,
         autoPlay: true,
         onPageChanged: (index, reason) {
           _currentIndex=index;
