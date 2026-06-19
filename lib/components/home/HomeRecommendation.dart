@@ -21,7 +21,7 @@ class _HomeRecommendationState extends State<HomeRecommendation> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(list[index].picture,width: 100,height: 140,fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/LingJun1.jpg",width: 100,height: 140,fit: BoxFit.cover,),)
+            child: Image.network(list[index].picture,width: MediaQuery.of(context).size.width*0.2, height: 140,fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/LingJun1.jpg",width: MediaQuery.of(context).size.width*0.2,height: 140,fit: BoxFit.cover,),)
           ),
           SizedBox(height: 10),
           Container(
@@ -63,7 +63,7 @@ class _HomeRecommendationState extends State<HomeRecommendation> {
 
   Widget _getLeftPicture(){
     return Container(
-      width: 100,
+      width: MediaQuery.of(context).size.width*0.2,
       height: 140,
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage("lib/assets/Kapibala.jpg"),fit: BoxFit.cover),
@@ -86,13 +86,23 @@ class _HomeRecommendationState extends State<HomeRecommendation> {
           children: [
             _getHeader(),
             SizedBox(height: 10,),
-            Row(children: [
+            // Flex(
+            //   direction: Axis.horizontal,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Expanded(child: _getLeftPicture()),
+            //     SizedBox(width: 10,),
+            //     Expanded(child: Row(children: _displayGoodsItems(),mainAxisAlignment: MainAxisAlignment.spaceEvenly,))
+            //   ],            
+            // ),
+            Row(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               _getLeftPicture(),
               SizedBox(width: 10,),
-              Expanded(child: Row(children: _displayGoodsItems(),mainAxisAlignment: MainAxisAlignment.spaceEvenly,))
-            ],crossAxisAlignment: CrossAxisAlignment.start,)
-          ],
-        ),
+              Expanded(child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: _displayGoodsItems()))
+            ]
+          ),
+        ]),
       ),   
     );
   }

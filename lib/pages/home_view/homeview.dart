@@ -58,69 +58,78 @@ class _HomeViewState extends State<HomeView> {
             ],
         ))),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      HomeGoodsList(goodsList: _goodsList,)
+      HomeGoodsList(goodsList: _goodsList,),
     ];
   }
+  Future<void> _refresh()async{
+    _page=1;
+    _isThereaNextPage=true;
+    _isLoading=false;
+    await _getBannerList();
+    await _getCategoryList();
+    await _getRecommendationList();
+    await _getHotRecommendationList();
+    await _getHotRecommendationRelatedList();
+    await _getGoodsList();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),content: Text("刷新完成",textAlign: TextAlign.center,),width: 120,behavior: SnackBarBehavior.floating,));
+    setState(() {
+    
+    });
+  }
+
+
+
   @override
   void initState() { 
     super.initState();
-    _getBannerList();
-    _getCategoryList();
-    _getRecommendationList();
-    _getHotRecommendationList();
-    _getHotRecommendationRelatedList();
-    _getGoodsList();
+    // _getBannerList();
+    // _getCategoryList();
+    // _getRecommendationList();
+    // _getHotRecommendationList();
+    // _getHotRecommendationRelatedList();
+    // _getGoodsList();
     _registerScrollController();
-
+    Future.microtask((){
+      _refreshIndicatorKey.currentState?.show();
+    });
   }
+
   void _registerScrollController(){
     _scrollController.addListener((){
-      if (_scrollController.position.pixels==_scrollController.position.maxScrollExtent){
+      if (_scrollController.position.pixels>=_scrollController.position.maxScrollExtent){
         _getGoodsList();
       }
-      setState(() {
-        
-      });
+
     });
   }
 
 
 
-  void _getBannerList()async{
+  Future<void> _getBannerList()async{
     _bannerList=  await getBannerListAPI();
-    setState(() {
-      
-    });
+
   }
-  void _getCategoryList()async{
+  Future<void> _getCategoryList()async{
     _categoryList=  await getCategoryListAPI();
-    setState(() {
-      
-    });
+
   }
-  void _getRecommendationList()async{
+  Future<void> _getRecommendationList()async{
     _recommendationResult= await getRecommendationListAPI();
-    setState(() {
-      
-    });
+ 
   }
-  void _getHotRecommendationList()async{
+  Future<void> _getHotRecommendationList()async{
     _hotRecommendationResult= await getHotRecommendationListAPI();
-    setState(() {
-      
-    });
+   
   }
-  void _getHotRecommendationRelatedList()async{
+  Future<void> _getHotRecommendationRelatedList()async{
     _hotRecommendationResultRelated= await getHotRecommendationRelatedListAPI();
-    setState(() {
-      
-    });
+    
   }
 
 int _page = 1;
 bool _isLoading = false;
 bool _isThereaNextPage = true;
-void _getGoodsList()async{
+Future<void> _getGoodsList()async{
   if(_isLoading|| !_isThereaNextPage){
     return;
     }
@@ -139,15 +148,21 @@ void _getGoodsList()async{
 }
 
 final ScrollController _scrollController=ScrollController();
-
+final GlobalKey<RefreshIndicatorState>_refreshIndicatorKey=GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: _scrollController,
-      slivers: _getslivers(),
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: ()async{
+        await _refresh();
+      },
+      
+      child: CustomScrollView(
+        controller: _scrollController,
+        slivers: _getslivers(),
+      )
     );
-    
   }
 }
 
