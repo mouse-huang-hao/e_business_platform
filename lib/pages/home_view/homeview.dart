@@ -15,6 +15,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  RecommendationResult _hotRecommendationResult = RecommendationResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
+
+  RecommendationResult _hotRecommendationResultRelated =  RecommendationResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
+
+
   List<BannerItem>_bannerList=[];
   List<CategoryItem>_categoryList=[];
   RecommendationResult _recommendationResult=RecommendationResult(
@@ -36,9 +49,9 @@ class _HomeViewState extends State<HomeView> {
           child:Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: HomeHot()),
+              Expanded(child: HomeHot(result: _hotRecommendationResult, type:"hot")),
               SizedBox(width: 10),
-              Expanded(child: HomeHot())
+              Expanded(child: HomeHot(result: _hotRecommendationResultRelated, type:"step"))
             ],
         ))),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -51,6 +64,8 @@ class _HomeViewState extends State<HomeView> {
     _getBannerList();
     _getCategoryList();
     _getRecommendationList();
+    _getHotRecommendationList();
+    _getHotRecommendationRelatedList();
 
   }
 
@@ -73,6 +88,20 @@ class _HomeViewState extends State<HomeView> {
       
     });
   }
+  void _getHotRecommendationList()async{
+    _hotRecommendationResult= await getHotRecommendationListAPI();
+    setState(() {
+      
+    });
+  }
+  void _getHotRecommendationRelatedList()async{
+    _hotRecommendationResultRelated= await getHotRecommendationRelatedListAPI();
+    setState(() {
+      
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

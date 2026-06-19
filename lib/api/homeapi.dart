@@ -17,3 +17,11 @@ Future<List<CategoryItem>> getCategoryListAPI()async{
 Future<RecommendationResult> getRecommendationListAPI()async{
   return RecommendationResult.fromJSON(await dioRequest.get(RequestInterface.RECOMMENDATION));
 }
+
+Future<RecommendationResult> getHotRecommendationListAPI()async{
+  return RecommendationResult.fromJSON(await dioRequest.get(RequestInterface.HOT_RECOMMENDATION));
+}
+
+Future<RecommendationResult> getHotRecommendationRelatedListAPI()async{
+  return RecommendationResult.fromJSON(await dioRequest.get(RequestInterface.HOT_RECOMMENDATION_RELATED));
+}

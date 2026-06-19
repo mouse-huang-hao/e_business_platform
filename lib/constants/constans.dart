@@ -10,4 +10,6 @@ class RequestInterface{
   static const String BANNER = "/home/banner";
   static const String CATEGORY = "/home/category/head";
   static const String RECOMMENDATION = "/hot/preference";
+  static const String HOT_RECOMMENDATION = "/hot/inVogue";
+  static const String HOT_RECOMMENDATION_RELATED = "/hot/oneStop";
 }
