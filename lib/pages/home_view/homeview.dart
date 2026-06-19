@@ -70,8 +70,20 @@ class _HomeViewState extends State<HomeView> {
     _getHotRecommendationList();
     _getHotRecommendationRelatedList();
     _getGoodsList();
+    _registerScrollController();
 
   }
+  void _registerScrollController(){
+    _scrollController.addListener((){
+      if (_scrollController.position.pixels==_scrollController.position.maxScrollExtent){
+        _getGoodsList();
+      }
+      setState(() {
+        
+      });
+    });
+  }
+
 
 
   void _getBannerList()async{
@@ -105,17 +117,34 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+int _page = 1;
+bool _isLoading = false;
+bool _isThereaNextPage = true;
 void _getGoodsList()async{
-  _goodsList= await getGoodsListAPI();
+  if(_isLoading|| !_isThereaNextPage){
+    return;
+    }
+  _isLoading=true;
+  _goodsList= await getGoodsListAPI({"limit":8*_page});
+  _isLoading=false;
   setState(() {
     
   });
+  
+  if(_goodsList.length<8*_page){
+    _isThereaNextPage=false;
+    return;
+  }
+  _page++;
 }
+
+final ScrollController _scrollController=ScrollController();
 
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: _scrollController,
       slivers: _getslivers(),
     );
     

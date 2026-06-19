@@ -26,8 +26,8 @@ Future<RecommendationResult> getHotRecommendationRelatedListAPI()async{
   return RecommendationResult.fromJSON(await dioRequest.get(RequestInterface.HOT_RECOMMENDATION_RELATED));
 }
 
-Future<List<Good>> getGoodsListAPI()async{
-  return( (await dioRequest.get(RequestInterface.Goods))as List).map((item){
+Future<List<Good>> getGoodsListAPI(Map<String,dynamic>params)async{
+  return( (await dioRequest.get(RequestInterface.Goods,params:params))as List).map((item){
     return Good.fromJSON(item as Map<String,dynamic>);
   }).toList();
 }
