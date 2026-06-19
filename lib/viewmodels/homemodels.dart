@@ -90,3 +90,26 @@ class GoodsItem {
       orderNum: int.tryParse(json["orderNum"]?.toString()??"0")??0);
   }
 }
+
+class Good extends GoodsItem{
+  int payCount = 0;
+  Good({
+    required super.id,
+    required super.name,
+    required super.price,
+    required super.picture,
+    required super.orderNum,
+    required this.payCount,
+  }):super(desc:"");
+
+  factory Good.fromJSON(Map<String,dynamic>json){
+    return Good(
+      id: json["id"]?.toString()??"", 
+      name: json["name"]?.toString()??"",
+      price: json["price"]?.toString()??"",
+      picture: json["picture"]?.toString()??"",
+      orderNum: int.tryParse(json["orderNum"]?.toString() ?? "0")??0,
+      payCount: int.tryParse(json["payCount"]?.toString()??"0")??0);
+  }
+ 
+}

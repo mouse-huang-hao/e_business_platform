@@ -12,4 +12,5 @@ class RequestInterface{
   static const String RECOMMENDATION = "/hot/preference";
   static const String HOT_RECOMMENDATION = "/hot/inVogue";
   static const String HOT_RECOMMENDATION_RELATED = "/hot/oneStop";
+  static const String Goods = "/home/recommend";
 }

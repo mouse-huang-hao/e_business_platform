@@ -27,7 +27,8 @@ class _HomeViewState extends State<HomeView> {
     subTypes: [],
   );
 
-
+  List<Good>_goodsList=[];
+  
   List<BannerItem>_bannerList=[];
   List<CategoryItem>_categoryList=[];
   RecommendationResult _recommendationResult=RecommendationResult(
@@ -48,6 +49,8 @@ class _HomeViewState extends State<HomeView> {
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
           child:Flex(
             direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(child: HomeHot(result: _hotRecommendationResult, type:"hot")),
               SizedBox(width: 10),
@@ -55,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
             ],
         ))),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      HomeGoodsList()
+      HomeGoodsList(goodsList: _goodsList,)
     ];
   }
   @override
@@ -66,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
     _getRecommendationList();
     _getHotRecommendationList();
     _getHotRecommendationRelatedList();
+    _getGoodsList();
 
   }
 
@@ -101,6 +105,12 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+void _getGoodsList()async{
+  _goodsList= await getGoodsListAPI();
+  setState(() {
+    
+  });
+}
 
 
   @override

@@ -18,9 +18,9 @@ class _HomeHotState extends State<HomeHot> {
   }
   List<Widget>  _displayGoodsItems(){
     return _items.map((item){
-      return Container(
+      return Expanded(child:    Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: EdgeInsets.symmetric(horizontal: 5),
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -47,7 +47,7 @@ class _HomeHotState extends State<HomeHot> {
               )
             ],
           )        
-      );
+      ));
     }).toList();
   }
 
@@ -91,10 +91,13 @@ class _HomeHotState extends State<HomeHot> {
         child: Column(
           children: [
             _getHeader(),
-            SizedBox(height: 10,),
-            Row(
-              children: _displayGoodsItems(),
-            ),
+            SizedBox(height: 10,),            
+            Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: _displayGoodsItems(),
+              ),
           ],
         ),
       );
