@@ -113,3 +113,21 @@ class Good extends GoodsItem{
   }
  
 }
+
+class GoodItems {
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<Good> items;
+  GoodItems({required this.counts,required this.pageSize,required this.pages,required this.page,required this.items});
+  factory GoodItems.fromJSON(Map<String,dynamic>json){
+    return GoodItems(
+      counts: int.tryParse(json["counts"]?.toString()??"0")??0,
+      pageSize: int.tryParse(json["pageSize"]?.toString()??"0")??0,
+      pages: int.tryParse(json["pages"]?.toString()??"0")??0,
+      page: int.tryParse(json["page"]?.toString()??"0")??0, 
+      items: (json["items"] as List? ?? [])
+      .map((item)=>Good.fromJSON(item as Map<String,dynamic>)).toList());
+  }
+}
