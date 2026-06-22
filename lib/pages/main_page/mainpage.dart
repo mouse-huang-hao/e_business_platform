@@ -1,3 +1,4 @@
+import 'package:e_business_platform/pages/cart_view/cartview.dart';
 import 'package:e_business_platform/pages/classification_view/classificationview.dart';
 import 'package:e_business_platform/pages/home_view/homeview.dart';
 import 'package:e_business_platform/pages/mine_view/mineview.dart';
@@ -76,5 +77,5 @@ class _MainpageState extends State<Mainpage> {
 }
 
  List<Widget> _getIndexedStack(){
-  return [HomeView(),ClassificationView(),HomeView(),MineView()];
+  return [HomeView(),ClassificationView(),CartView(),MineView()];
  }

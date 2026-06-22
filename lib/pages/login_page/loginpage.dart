@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:e_business_platform/api/user.dart';
 import 'package:e_business_platform/utils/toastutils.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +66,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  _login()async{
+    try{
+      final res = await loginAPI({
+      "account":"${_accountController.text}",
+      "password":"${_codeController.text}"
+      });
+      ToastUtils.showToast(context, "登录成功");
+      Navigator.pop(context);
+    }catch(e){
+      ToastUtils.showToast(context, (e as DioException).message);
+    }
+  }
+
   Widget _bulildLoginButton(){
     return SizedBox(
       width: double.infinity,
@@ -72,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: (){
           if( _key.currentState!.validate()){
             if(_isChecked){
-
+              _login();
             }else{
               ToastUtils.showToast(context, "请勾选用户协议");
             }
