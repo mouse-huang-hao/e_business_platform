@@ -1,8 +1,10 @@
 import 'package:e_business_platform/api/mineapi.dart';
 import 'package:e_business_platform/components/home/HomeGoodsList.dart';
 import 'package:e_business_platform/components/mine/MineList.dart';
+import 'package:e_business_platform/stores/UserController.dart';
 import 'package:e_business_platform/viewmodels/homemodels.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MineView extends StatefulWidget {
   MineView({Key? key}) : super(key: key);
@@ -12,6 +14,10 @@ class MineView extends StatefulWidget {
 }
 
 class _MineViewState extends State<MineView> {
+  final Usercontroller _usercontroller = Get.put(Usercontroller());
+
+
+
   Widget _buildHeader(){
     return Container(
       decoration: BoxDecoration(
@@ -27,22 +33,31 @@ class _MineViewState extends State<MineView> {
       padding:  const EdgeInsets.only(left: 20,right: 40,top: 80,bottom: 20),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 26,
-            backgroundImage: AssetImage("lib/assets/icon_login.jpeg"),
-            backgroundColor: Colors.white,
-          ),
+          Obx((){
+            return CircleAvatar(
+              radius: 26,
+              backgroundImage: 
+              _usercontroller.user.value.avatar.isNotEmpty?
+              NetworkImage(_usercontroller.user.value.avatar):
+              AssetImage("lib/assets/icon_login.jpeg"),
+              backgroundColor: Colors.white,
+            );
+          }),          
           const SizedBox(width: 12,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context, "/login");
-                  },
-                  child: Text("立即登录",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                )                
+                Obx((){
+                  return  GestureDetector(
+                    onTap: (){
+                      if(_usercontroller.user.value.id.isEmpty){
+                        Navigator.pushNamed(context, "/login");
+                      }  
+                    },
+                    child:  Text(_usercontroller.user.value.id.isNotEmpty?_usercontroller.user.value.account:"立即登录",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+                  );      
+                })         
               ],
               )
           )
