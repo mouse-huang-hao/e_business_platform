@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:e_business_platform/api/user.dart';
 import 'package:e_business_platform/stores/TokenManager.dart';
 import 'package:e_business_platform/stores/UserController.dart';
+import 'package:e_business_platform/utils/LoadingDialog.dart';
 import 'package:e_business_platform/utils/toastutils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,15 +73,18 @@ class _LoginPageState extends State<LoginPage> {
 
   _login()async{
     try{
+      Loadingdialog.show(context,message: "努力登录中...");
       final res = await loginAPI({
       "account":"${_accountController.text}",
       "password":"${_codeController.text}"
       });
       _usercontroller.upadeateUserInfo(res);
       tokenManager.setToken(res.token) ;
+      Loadingdialog.hide(context);
       ToastUtils.showToast(context, "登录成功");
       Navigator.pop(context);
     }catch(e){
+      Loadingdialog.hide(context);
       ToastUtils.showToast(context, (e as DioException).message);
     }
   }
@@ -169,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("惠多美登录",style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text("惠多美登录",style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
         backgroundColor: Colors.white,
       ),
       body: Form(
