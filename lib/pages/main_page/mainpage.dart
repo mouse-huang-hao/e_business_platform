@@ -1,8 +1,12 @@
+import 'package:e_business_platform/api/user.dart';
 import 'package:e_business_platform/pages/cart_view/cartview.dart';
 import 'package:e_business_platform/pages/classification_view/classificationview.dart';
 import 'package:e_business_platform/pages/home_view/homeview.dart';
 import 'package:e_business_platform/pages/mine_view/mineview.dart';
+import 'package:e_business_platform/stores/TokenManager.dart';
+import 'package:e_business_platform/stores/UserController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class Mainpage extends StatefulWidget {
@@ -37,6 +41,19 @@ class _MainpageState extends State<Mainpage> {
       }
   ];
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getUserInfo();
+  }
+  final Usercontroller _userController = Get.put(Usercontroller());
+  _getUserInfo()async{
+    await tokenManager.init();
+    if (tokenManager.getToken().isNotEmpty){
+      _userController.upadeateUserInfo(await getUserInfoAPI());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

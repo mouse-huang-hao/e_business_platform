@@ -14,7 +14,7 @@ class MineView extends StatefulWidget {
 }
 
 class _MineViewState extends State<MineView> {
-  final Usercontroller _usercontroller = Get.put(Usercontroller());
+  final Usercontroller _usercontroller = Get.find();
 
 
 

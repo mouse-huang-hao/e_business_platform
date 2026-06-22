@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:e_business_platform/api/user.dart';
+import 'package:e_business_platform/stores/TokenManager.dart';
 import 'package:e_business_platform/stores/UserController.dart';
 import 'package:e_business_platform/utils/toastutils.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       "password":"${_codeController.text}"
       });
       _usercontroller.upadeateUserInfo(res);
+      tokenManager.setToken(res.token) ;
       ToastUtils.showToast(context, "登录成功");
       Navigator.pop(context);
     }catch(e){
