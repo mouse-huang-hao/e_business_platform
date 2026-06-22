@@ -93,8 +93,10 @@ class _MineViewState extends State<MineView> {
   }
   Widget _buildVIP(){
     return Padding(
+      
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 239, 197, 153),
